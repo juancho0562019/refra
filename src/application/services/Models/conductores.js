@@ -63,7 +63,7 @@ export const saveConductores = (conductores, db) => {
           SAVECONDUCTOR,
           [conductor.nombre, conductor.apellidos, conductor.id, fecha],
           (_, result) => resolve(200),
-          (_, err) => console.log(err)
+          (_, err) => reject(err)
         );
       });
     });
