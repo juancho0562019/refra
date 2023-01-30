@@ -1,0 +1,51 @@
+{
+  "expo": {
+    "name": "app_refra",
+    "slug": "app_refra",
+    "version": "1.0.0",
+    "sdkVersion": "45.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "plugins": [
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/icons/notification-icon.png",
+          "color": "#ffffff"
+        }
+      ]
+    ],
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "googleServicesFile": "./google-services.json",
+      "useNextNotificationsApi": true,
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#FFFFFF"
+      },
+      "package": "com.juancho0056.app_refra"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "f7503c66-ca6f-43fe-9417-da87a638f643"
+      }
+    }
+  }
+}

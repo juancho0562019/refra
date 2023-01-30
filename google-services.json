@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "349602008684",
+    "project_id": "refra-technik",
+    "storage_bucket": "refra-technik.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:349602008684:android:48b5e5c3cf17a017811249",
+        "android_client_info": {
+          "package_name": "com.juancho0056.app_refra"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "349602008684-8t2b9406m6plpvgsjos4gpp5nsu4rlhd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMIvl0gQjS0Cmy_TNLKSHfOU7fu71MRmo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "349602008684-8t2b9406m6plpvgsjos4gpp5nsu4rlhd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
