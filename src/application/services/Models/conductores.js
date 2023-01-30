@@ -61,9 +61,9 @@ export const saveConductores = (conductores, db) => {
       conductores.forEach((conductor) => {
         tx.executeSql(
           SAVECONDUCTOR,
-          [conductor.nombres, conductor.apellidos, conductor.id, fecha],
+          [conductor.nombre, conductor.apellidos, conductor.id, fecha],
           (_, result) => resolve(200),
-          (_, err) => reject(500)
+          (_, err) => console.log(err)
         );
       });
     });

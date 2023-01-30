@@ -77,7 +77,7 @@ export const CREATETABLECONDUCTOR = `CREATE TABLE IF NOT EXISTS conductores (
 
 export const REMOVETABLECONDUCTOR = `DROP TABLE IF EXISTS conductores `;
 export const SAVECONDUCTOR = `INSERT INTO conductores (nombre, apellido, codigo, createdAt) 
-    VALUES (?,?,?,?,?) `;
+    VALUES (?,?,?,?) `;
 
 export const REMOVECONDUCTOR = ` DELETE FROM conductores `;
 
