@@ -221,7 +221,7 @@ export const getCountTrasladoLocal = (db, nombre, apellido, fecha, usuario) => {
    case when ifnull(codInterno, '') = '' THEN 0 ELSE 1 END codInterno, d.nombre nomBodegaOrigen, e.nombre nomBodegaDestino,
     count(*) articulos, sum(b.id) detalles
   FROM traslados a LEFT JOIN detalletraslados b ON a.id = b.trasladoId 
-  LEFT JOIN conductores c ON c.usuario = a.conductorId 
+  LEFT JOIN conductores c ON c.codigo = a.conductorId 
   LEFT JOIN bodegas d ON a.bodegaOrigenId = d.codigo
   LEFT JOIN bodegas e ON a.bodegaDestinoId = e.codigo
   WHERE a.estado = "LOCAL" AND a.created = '${usuario}'
