@@ -1,3 +1,2 @@
-import ClassTypeOption from './ClassTypeOption'
-import  ModalBodega  from './ModalBodega'
-export {ClassTypeOption, ModalBodega} 
+import ClassTypeOption from "./ClassTypeOption";
+export { ClassTypeOption };

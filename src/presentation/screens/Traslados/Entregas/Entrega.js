@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import RNPickerSelect from "react-native-picker-select";
+import Picker from "@ouroboros/react-native-picker";
 import {
   View,
   FlatList,

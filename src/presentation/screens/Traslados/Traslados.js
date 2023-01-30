@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import RNPickerSelect from "react-native-picker-select";
+import Picker from "@ouroboros/react-native-picker";
 import {
   View,
   FlatList,
@@ -813,18 +813,16 @@ const Traslados = ({ navigation, route }) => {
                     style={{ paddingTop: 5, marginRight: 5 }}
                   />
                   <View style={styles.containerSelect}>
-                    <RNPickerSelect
-                      onValueChange={(value) => conductorChange(value)}
+                    <Picker
+                      onChanged={(value) => conductorChange(value)}
                       placeholder={{
                         label: "Seleccione un conductor",
                         value: null,
                       }}
-                      items={conductores?.map((conductor, index) => ({
-                        label: `${conductor?.nombres} ${conductor?.apellidos}`,
+                      options={conductores?.map((conductor, index) => ({
+                        text: `${conductor?.nombres} ${conductor?.apellidos}`,
                         value: conductor?.codigo,
                       }))}
-                      style={{ inputAndroid: styles.inputAndroid }}
-                      useNativeAndroidPickerStyle={false}
                       value={data.conductor}
                     />
                   </View>
@@ -895,21 +893,15 @@ const Traslados = ({ navigation, route }) => {
                     style={{ paddingTop: 5, marginRight: 5 }}
                   />
                   <View style={styles.containerSelect}>
-                    <RNPickerSelect
-                      onValueChange={(value) => bodegaChange(value)}
-                      placeholder={{
-                        label: "Seleccione una bodega",
-                        value: null,
-                      }}
-                      items={bodegas
+                    <Picker
+                      onChanged={(value) => bodegaChange(value)}
+                      options={bodegas
                         .filter((x) => x.codigo != user.bodegaId)
                         ?.map((bodega, index) => ({
-                          label: bodega?.nombre,
+                          text: bodega?.nombre,
                           value: bodega?.codigo,
                         }))}
                       value={data?.bodegaDestino}
-                      style={{ inputAndroid: styles.inputAndroid }}
-                      useNativeAndroidPickerStyle={false}
                     />
                   </View>
                   <Image
