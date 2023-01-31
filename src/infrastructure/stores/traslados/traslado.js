@@ -8,7 +8,8 @@ class Traslado {
     createdAt,
     detalle,
     bodegaOrigen,
-    bodegaDestino
+    bodegaDestino,
+    placa
   ) {
     this.id = id;
     this.usuarioEnviaId = usuarioEnviaId;
@@ -19,6 +20,7 @@ class Traslado {
     this.detalle = detalle;
     this.bodegaOrigen = bodegaOrigen;
     this.bodegaDestino = bodegaDestino;
+    this.placa = placa;
   }
 }
 

@@ -206,9 +206,8 @@ const Traslados = ({ navigation, route }) => {
   const loadDataCallback = useCallback(async (trasladoId) => {
     try {
       const trasladoStored = await loadTrasladoItem(trasladoId);
-      console.log(trasladoStored);
+
       if (trasladoStored?.id > 0) {
-        console.log(trasladoStored);
         setData({
           ...data,
           id: trasladoStored?.id,
@@ -343,14 +342,12 @@ const Traslados = ({ navigation, route }) => {
           )
             .toPromise()
             .then((response) => {
-              console.log(response);
               initialList.push({
                 status: 200,
                 message: "Traslado sincronizado correctamente",
               });
             })
             .catch((error) => {
-              console.log(error);
               if (error?.data) {
                 initialList.push({
                   status: error?.status,

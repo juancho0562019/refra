@@ -209,6 +209,7 @@ const Articulos = ({ navigation, route }) => {
                 flexDirection: "column",
               }}
             >
+              <Text>{herramientas.length}</Text>
               {herramientas?.map((item, index) => {
                 return (
                   <ClassTypeOption

@@ -311,9 +311,8 @@ const ArticulosEntrega = ({ navigation, route }) => {
     const [alter, setAlter] = useState(false);
     function updateCantidad(value, desc) {
       setCantidad(desc);
-      console.log(list);
+
       for (var i in list) {
-        console.log(value);
         if (list[i].codigoInterno == value) {
           list[i].cantidadRecibida = desc;
           break;

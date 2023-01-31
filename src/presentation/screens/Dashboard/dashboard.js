@@ -120,8 +120,6 @@ const Dashboard = ({ navigation }) => {
         valueResponse?.data?.status === undefined &&
         valueResponse?.length > 0
       ) {
-        console.log("valueResponse");
-        console.log(valueResponse);
         const initialList = [];
         for (const element of valueResponse) {
           if (!element.data) {
@@ -129,6 +127,7 @@ const Dashboard = ({ navigation }) => {
             continue;
           }
           if (element.type === "articulo") {
+            console.log(element.data.items.length);
             var estado = await ProductoSyncInit(element.data.items);
             setStatus(initialList, estado, element?.type);
           }
@@ -162,7 +161,6 @@ const Dashboard = ({ navigation }) => {
   function ResponseDataMessage(response) {
     let message = "";
     response.forEach((element) => {
-      console.log(element);
       if (element.status !== 200) {
         message = message + `\n[${element.type}] Error sincronizando`;
       }
@@ -174,9 +172,8 @@ const Dashboard = ({ navigation }) => {
     setLoading(false);
   }
   async function GetAllData(url, type) {
-    console.log(url);
     const data = await APIHandler.get(`${url}`).toPromise();
-    console.log(data);
+
     const response = {
       data: data || {},
       type: type || "",
@@ -189,7 +186,6 @@ const Dashboard = ({ navigation }) => {
         try {
           return await GetAllData(item.url, item.id);
         } catch (error) {
-          console.log(error);
           return { type: item.id, status: error?.status };
         }
       })

@@ -94,7 +94,7 @@ export const countTrasladosLocal = (nombre, apellido, fecha, usuario) => {
         fecha,
         usuario
       );
-      console.log(dbResult);
+
       dispatch({
         type: SET_TRASLADOLOCAL,
         trasladoLocal: dbResult.rows._array,
@@ -108,11 +108,9 @@ export const countTrasladosLocal = (nombre, apellido, fecha, usuario) => {
 export const countTrasladosLocalResult = (nombre, apellido, fecha) => {
   return new Promise((resolve, reject) => {
     try {
-      console.log("Count");
       getCountTrasladoLocal(db, nombre, apellido, fecha)
         .then((dbResult) => resolve({ items: dbResult.rows._array }))
         .catch((err) => {
-          console.log(err);
           reject({ items: [] });
         });
 
@@ -134,7 +132,8 @@ export const addTraslado = (
   detalle,
   bodegaOrigen,
   bodegaDestino,
-  user
+  user,
+  placa
 ) => {
   return async (dispatch) => {
     try {
@@ -147,7 +146,8 @@ export const addTraslado = (
         fecha,
         detalle,
         bodegaOrigen,
-        bodegaDestino
+        bodegaDestino,
+        placa
       );
       dispatch({ type: ADD_TRASLADO, newTraslado: newTraslado });
     } catch (err) {
@@ -163,7 +163,8 @@ export const updateTrasladoAction = (
   fecha,
   detalle,
   bodegaDestino,
-  user
+  user,
+  placa
 ) => {
   return async (dispatch) => {
     try {
@@ -173,7 +174,8 @@ export const updateTrasladoAction = (
         conductorId,
         fecha,
         bodegaDestino,
-        user
+        user,
+        placa
       );
 
       if (dbResult.rowsAffected > 0) {
@@ -192,7 +194,8 @@ export const updateTrasladoAction = (
             conductorId,
             "",
             fecha,
-            detalle
+            detalle,
+            placa
           );
           dispatch({ type: ADD_TRASLADO, newTraslado: newTraslado });
         }
@@ -257,7 +260,8 @@ export const saveTrasladoEntregaLocal = async (
   bodegaOrigen,
   bodegaDestino,
   user,
-  estadoLocal
+  estadoLocal,
+  placa
 ) => {
   return new Promise((resolve, reject) => {
     saveTrasladoEntrega(
@@ -269,7 +273,8 @@ export const saveTrasladoEntregaLocal = async (
       bodegaOrigen,
       bodegaDestino,
       user,
-      estadoLocal
+      estadoLocal,
+      placa
     )
       .then((x) => {
         saveDetalleTrasladoLocal(x.id, detalle, db)
@@ -322,7 +327,6 @@ export const removeTrasladoActionLocal = (id) => {
       .then((x) => {
         removeTraslado(db, id)
           .then((f) => {
-            console.log(id);
             resolve({ status: 200 });
           })
           .catch((err) => reject({ status: 500 }));

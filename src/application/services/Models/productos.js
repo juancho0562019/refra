@@ -4,6 +4,7 @@ import {
   SAVEPRODUCTO,
   REMOVEPRODUCTO,
   GETPRODUCTO,
+  GETPRODUCTOID,
 } from "../Database/sql";
 import { execute, DatabaseConnection } from "../Database/db-service";
 import Moment from "moment";
@@ -97,6 +98,19 @@ export const getProductos = () => {
         GETPRODUCTO,
         [],
         (_, result) => resolve(result),
+        (_, err) => reject(err)
+      );
+    });
+  });
+};
+
+export const getProducto = (codInterno) => {
+  return new Promise((resolve, reject) => {
+    DatabaseConnection.getConnection().transaction((tx) => {
+      tx.executeSql(
+        GETPRODUCTOID,
+        [codInterno],
+        (_, result) => resolve(result.rows._array[0]),
         (_, err) => reject(err)
       );
     });

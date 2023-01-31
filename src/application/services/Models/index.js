@@ -53,6 +53,7 @@ import {
   getProductos,
   saveProductos,
   getProductosSearch,
+  getProducto,
 } from "./productos";
 
 import {
@@ -145,4 +146,5 @@ export {
   saveDetalleTrasladoLocal,
   updateTrasladoLocal,
   updateTrasladoRecepcion,
+  getProducto,
 };

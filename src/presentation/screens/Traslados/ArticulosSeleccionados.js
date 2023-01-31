@@ -9,6 +9,7 @@ import {
   TextInput,
   ScrollView,
 } from "react-native";
+import { Alert } from "react-native";
 import * as Animatable from "react-native-animatable";
 import NumericInput from "react-native-numeric-input";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
@@ -23,6 +24,7 @@ import Animated, {
   withTiming,
   runOnJS,
 } from "react-native-reanimated";
+import { getProducto } from "../../../application/services";
 import { SharedElement } from "react-navigation-shared-element";
 import { IconButton, LineDivider } from "../../components";
 import { useSelector, useDispatch } from "react-redux";
@@ -182,52 +184,64 @@ const ArticulosSeleccionados = ({ navigation, route }) => {
   const setValueQr = (valQr) => {
     if (valQr !== undefined && valQr !== "undefined") {
       const res = valQr.split("|");
-
       if (res.length >= 1) {
-        const herramienta = herramientas.find(
-          (value) => value.codigoInterno === res[0]
-        );
-
-        if (
-          herramienta === null ||
-          herramienta === undefined ||
-          herramienta === "undefined"
-        ) {
-          Alert.alert(
-            "Error!!!",
-            `Verifique que la herramienta de codigo ${res[0]} este creada`,
-            [
-              {
-                text: "Ok",
-                onPress: () => null,
-              },
-            ],
-            { cancelable: false }
-          );
-        } else {
-          if (!isSelected(herramienta?.codigo)) {
-            let primerCentro = "";
-            if (list.length > 0) {
-              primerCentro = list[0].centroCosto;
+        getProducto(res[0])
+          .then((herramienta) => {
+            console.log(herramienta);
+            if (
+              herramienta === null ||
+              herramienta === undefined ||
+              herramienta === "undefined"
+            ) {
+              Alert.alert(
+                "Error!!!",
+                `Verifique que la herramienta de codigo ${res[0]} este creada`,
+                [
+                  {
+                    text: "Ok",
+                    onPress: () => null,
+                  },
+                ],
+                { cancelable: false }
+              );
+            } else {
+              if (!isSelected(herramienta?.codigo)) {
+                let primerCentro = "";
+                if (list.length > 0) {
+                  primerCentro = list[0].centroCosto;
+                }
+                const newList = list.concat({
+                  codigo: herramienta?.codigo,
+                  codigoInterno: herramienta?.codigoInterno,
+                  centroCosto: primerCentro,
+                  color: herramienta?.color,
+                  createdAt: herramienta?.createdAt,
+                  marca: herramienta?.marca,
+                  nombre: herramienta?.nombre,
+                  serie: herramienta?.serie,
+                  tipo: herramienta?.tipo,
+                  unidad: herramienta?.unidad,
+                  nombreUnidad: herramienta?.nombreUnidad,
+                  cantidad: 1,
+                  cantidadRecibida: 0,
+                });
+                setList(newList);
+              }
             }
-            const newList = list.concat({
-              codigo: herramienta?.codigo,
-              codigoInterno: herramienta?.codigoInterno,
-              centroCosto: primerCentro,
-              color: herramienta?.color,
-              createdAt: herramienta?.createdAt,
-              marca: herramienta?.marca,
-              nombre: herramienta?.nombre,
-              serie: herramienta?.serie,
-              tipo: herramienta?.tipo,
-              unidad: herramienta?.unidad,
-              nombreUnidad: herramienta?.nombreUnidad,
-              cantidad: 1,
-              cantidadRecibida: 0,
-            });
-            setList(newList);
-          }
-        }
+          })
+          .catch((err) => {
+            Alert.alert(
+              "Error!!!",
+              `Verifique que la herramienta de codigo ${res[0]} este creada`,
+              [
+                {
+                  text: "Ok",
+                  onPress: () => null,
+                },
+              ],
+              { cancelable: false }
+            );
+          });
       }
     }
   };

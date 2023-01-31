@@ -60,13 +60,14 @@ export const updateTraslado = (
   conductorId,
   fecha,
   bodegaDestino,
-  user
+  user,
+  placa
 ) => {
   return new Promise((resolve, reject) => {
     db.transaction((tx) => {
       tx.executeSql(
         UPDATETRASLADO,
-        [conductorId, fecha, bodegaDestino, id, user],
+        [conductorId, fecha, bodegaDestino, placa, id, user],
         (_, result) => resolve(result),
         (_, err) => reject(err)
       );
@@ -248,7 +249,8 @@ export const saveTrasladoEntrega = (
   bodegaOrigen,
   bodegaDestino,
   user,
-  estadoLocal
+  estadoLocal,
+  placa
 ) => {
   return new Promise((resolve, reject) => {
     db.transaction((tx) => {
@@ -264,6 +266,7 @@ export const saveTrasladoEntrega = (
           bodegaDestino,
           estadoLocal,
           user,
+          placa,
         ],
         (_, result) => resolve({ id: result.insertId, status: 200 }),
         (_, err) => reject({ id: 0, status: 500 })

@@ -62,6 +62,7 @@ import {
   saveDetalleTrasladoLocal,
   updateTrasladoLocal,
   updateTrasladoRecepcion,
+  getProducto,
 } from "./Models";
 
 import {
@@ -143,4 +144,5 @@ export {
   saveDetalleTrasladoLocal,
   updateTrasladoLocal,
   updateTrasladoRecepcion,
+  getProducto,
 };

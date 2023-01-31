@@ -8,7 +8,6 @@ import {
   Image,
 } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
-
 function QrHerramienta({ navigation }) {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);

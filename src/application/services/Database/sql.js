@@ -45,6 +45,11 @@ export const GETPRODUCTO = ` SELECT nombre, codigo, codigoInterno, marca, serie,
     FROM productos 
     ORDER BY nombre DESC`;
 
+export const GETPRODUCTOID = ` SELECT a.nombre, a.codigo, a.codigoInterno, a.marca, a.serie, a.tipo, a.unidad, a.color, a.centroCosto, a.createdAt, b.nombre nombreUnidad
+    FROM productos a LEFT JOIN unidades b ON b.codigo = a.unidad
+    Where codigoInterno = ?
+    ORDER BY a.nombre DESC`;
+
 export const SAVEPRODUCTOS = `INSERT  INTO productos(nombre, codigo, codigoInterno, marca, serie, tipo, unidad, color, centroCosto, createdAt) values`;
 /** */
 
@@ -99,7 +104,8 @@ export const CREATETABLETRASLADO = `CREATE TABLE IF NOT EXISTS traslados (
     bodegaOrigenId  INTEGER NOT NULL REFERENCES bodegas(codigo) ON DELETE NO ACTION,
     bodegaDestinoId  INTEGER NOT NULL REFERENCES bodegas(codigo) ON DELETE NO ACTION,
     estado TEXT not null,
-    created TEXT not null
+    created TEXT not null,
+    placa TEXT NOT NULL
     )`;
 
 export const REMOVETABLETRASLADO = `DROP TABLE IF EXISTS traslados `;
@@ -107,10 +113,10 @@ export const SAVETRASLADO = `INSERT INTO traslados (usuarioEnviaId, conductorId,
      bodegaOrigenId, bodegaDestinoId, estado, created) 
         VALUES (?,?,?,?, ?, ?, ?, ?) `;
 export const SAVETRASLADOENTREGA = `INSERT INTO traslados (codInterno, usuarioEnviaId, conductorId,
-     fecha, createdAt, bodegaOrigenId, bodegaDestinoId, estado, created) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) `;
+     fecha, createdAt, bodegaOrigenId, bodegaDestinoId, estado, created, placa) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) `;
 
-export const UPDATETRASLADO = `UPDATE traslados SET conductorId = ?, fecha = ?, bodegaDestinoId = ?
+export const UPDATETRASLADO = `UPDATE traslados SET conductorId = ?, fecha = ?, bodegaDestinoId = ?, placa = ?
                                 WHERE id = ? and created = ?`;
 export const UPDATETRASLADOLOCAL = `UPDATE traslados SET codInterno = ?, usuarioEnviaId = ?, conductorId = ?, fecha = ?, bodegaDestinoId = ?, bodegaOrigenId = ?
                                 WHERE id = ? and created = ? and estado = ?`;
@@ -146,7 +152,7 @@ export const COUNTTRASLADOS = `SELECT fecha, COUNT(*) traslados, sum(state) stat
 
 export const GETTRASLADO = ` SELECT a.id, a.codInterno, a.usuarioEnviaId, a.usuarioRecibeId, a.conductorId, 
 (b.nombre ||' '||b.apellido) nomConductor, a.fecha, a.createdAt, 
-bodegaOrigenId bodegaOrigen, bodegaDestinoId bodegaDestino, c.nombre nomBodegaDestino, d.nombre nomBodegaOrigen
+bodegaOrigenId bodegaOrigen, bodegaDestinoId bodegaDestino, c.nombre nomBodegaDestino, d.nombre nomBodegaOrigen, a.placa
         FROM traslados a 
         LEFT JOIN conductores b ON b.codigo = a.conductorId 
         LEFT JOIN bodegas c ON c.codigo = a.bodegaDestinoId

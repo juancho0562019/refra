@@ -46,21 +46,18 @@ const EntregasDecargas = ({ navigation, route }) => {
   useEffect(() => {
     if (isFocused) {
       if (user) {
-        console.log("paso1");
         setLoading(true);
-        console.log("paso2");
+
         countTrasladosLocalResult(data?.nombre, data?.apellido, null).then(
           (x) => {
             let itemsEnvio = [];
             x.items.forEach(function (item) {
               itemsEnvio.push(`listId=${item.idInterno}`);
             });
-            console.log(itemsEnvio);
+
             const idEnvio =
               itemsEnvio?.length > 0 ? `${itemsEnvio.join("&")}` : ``;
-            console.log(
-              `${Globals.GetTrasladosBodega}?bodega=${user?.username}&${idEnvio}`
-            );
+
             APIHandler.get(
               `${Globals.GetTrasladosBodega}?bodega=${user?.username}&${idEnvio}`
             )
@@ -68,9 +65,8 @@ const EntregasDecargas = ({ navigation, route }) => {
               .then((response) => {
                 setData(response?.items);
               })
-              //.then((r) => console.log(r))
+
               .catch((error) => {
-                console.log(error);
                 if (error.status === 404) {
                   Alert.alert(error?.data?.detail);
                   backHandler();

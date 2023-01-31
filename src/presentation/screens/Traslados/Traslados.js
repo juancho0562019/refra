@@ -45,6 +45,7 @@ import Animated, {
   runOnJS,
 } from "react-native-reanimated";
 import { useNetInfo } from "@react-native-community/netinfo";
+import { TextInput } from "react-native-gesture-handler";
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 const HEADER_HEIGHT = 210;
 const Traslados = ({ navigation, route }) => {
@@ -70,10 +71,13 @@ const Traslados = ({ navigation, route }) => {
     conductor: "",
     fecha: "",
     bodegaDestino: "",
+    placa: "",
     check_conductorChange: false,
     check_bodegaDestinoChange: false,
+    check_placaChange: false,
     secureTextEntry: true,
     isValidConductor: false,
+    isValidPlaca: false,
     isValidBodegaDestino: false,
   });
   const [isSaved, setIsSaved] = useState(true);
@@ -104,7 +108,8 @@ const Traslados = ({ navigation, route }) => {
       user?.bodegaId,
       data?.bodegaDestino,
       user.username,
-      ""
+      "",
+      data?.placa
     )
       .then((x) => {
         setData({
@@ -112,7 +117,7 @@ const Traslados = ({ navigation, route }) => {
           id: x.id,
           fecha: Moment(fecha).format("yyyy-MM-DD"),
         });
-        console.log(data);
+
         setIsSaved(true);
         dispatch(
           addTraslado(
@@ -123,7 +128,8 @@ const Traslados = ({ navigation, route }) => {
             list,
             user?.bodegaId,
             data?.bodegaDestino,
-            user?.username
+            user?.username,
+            data?.placa
           )
         );
         Alert.alert(
@@ -164,7 +170,8 @@ const Traslados = ({ navigation, route }) => {
         fecha,
         list,
         data?.bodegaDestino,
-        user?.username
+        user?.username,
+        data?.placa
       )
     );
 
@@ -224,6 +231,10 @@ const Traslados = ({ navigation, route }) => {
       showMessageError("Bodega", "Bodega", "");
       return false;
     }
+    if (data?.placa?.length <= 0) {
+      showMessageError("Placa", "Placa", "");
+      return false;
+    }
     for (var i in list) {
       if (list[i].centroCosto?.length <= 0) {
         showMessageError(list[i]?.nombre, "CentroCosto", "herramienta");
@@ -281,8 +292,11 @@ const Traslados = ({ navigation, route }) => {
           codInterno: trasladoStored?.codInterno,
           conductor: trasladoStored?.conductorId,
           bodegaDestino: trasladoStored?.bodegaDestino,
+          placa: trasladoStored?.placa,
           fecha: Moment(trasladoStored?.fecha).format("yyyy-MM-DD"),
           isValidConductor: true,
+          isValidPlaca: true,
+
           isValidBodegaDestino: true,
           check_conductorChange: true,
         });
@@ -355,6 +369,24 @@ const Traslados = ({ navigation, route }) => {
     });
     handleValidConductor(val);
   };
+
+  const placaChange = (val) => {
+    if (val.trim().length >= 4) {
+      setData({
+        ...data,
+        placa: val,
+        check_textPlacaChange: true,
+        isValidPlaca: true,
+      });
+    } else {
+      setData({
+        ...data,
+        placa: val,
+        check_textPlacaChange: false,
+        isValidPlaca: false,
+      });
+    }
+  };
   const handleValidConductor = (val) => {
     if (val != null && val != undefined && val > 0) {
       setData({
@@ -373,9 +405,28 @@ const Traslados = ({ navigation, route }) => {
     }
   };
 
+  const handleValidPlaca = (val) => {
+    if (val != null && val != undefined && val.length > 0) {
+      setData({
+        ...data,
+        placa: val,
+        isValidPlaca: true,
+        check_placaChange: true,
+      });
+    } else {
+      setData({
+        ...data,
+        placa: val,
+        isValidPlaca: false,
+        check_placaChange: false,
+      });
+    }
+  };
+
   async function saveTrasladoAPI() {
     let dataSend = {
       usuarioEnvioId: `${user.username}`,
+      placa: data.placa,
       conductor: data.conductor,
       detalles: [],
       fecha: data?.fecha,
@@ -758,6 +809,10 @@ const Traslados = ({ navigation, route }) => {
                       ...FONTS.h3t,
                       fontSize: 15,
                       color: COLORS.black,
+                      borderBottomWidth: 1,
+                      maxWidth: 250,
+                      minWidth: 250,
+                      borderBottomColor: "#f2f2f2",
                     }}
                   >
                     {user?.bodegaNombre}
@@ -770,6 +825,7 @@ const Traslados = ({ navigation, route }) => {
                 duration={200}
                 delay={1050}
                 style={{
+                  flex: 1,
                   borderRadius: 8,
                   backgroundColor: COLORS.gray10,
                   paddingBottom: 5,
@@ -801,6 +857,7 @@ const Traslados = ({ navigation, route }) => {
 
                 <View
                   style={{
+                    flex: 1,
                     flexDirection: "row",
                     marginTop: 5,
                     paddingBottom: 5,
@@ -812,20 +869,28 @@ const Traslados = ({ navigation, route }) => {
                     size={15}
                     style={{ paddingTop: 5, marginRight: 5 }}
                   />
-                  <View style={styles.containerSelect}>
-                    <Picker
-                      onChanged={(value) => conductorChange(value)}
-                      placeholder={{
-                        label: "Seleccione un conductor",
-                        value: null,
-                      }}
-                      options={conductores?.map((conductor, index) => ({
-                        text: `${conductor?.nombres} ${conductor?.apellidos}`,
-                        value: conductor?.codigo,
-                      }))}
-                      value={data.conductor}
-                    />
-                  </View>
+
+                  <Picker
+                    onChanged={(value) => conductorChange(value)}
+                    placeholder={{
+                      label: "Seleccione un conductor",
+                      value: null,
+                    }}
+                    options={conductores?.map((conductor, index) => ({
+                      text: `${conductor?.nombres} ${conductor?.apellidos}`,
+                      value: conductor?.codigo,
+                    }))}
+                    value={data.conductor}
+                    style={{
+                      flex: 1,
+                      borderBottomWidth: 1,
+                      borderRadius: 5,
+                      minWidth: 250,
+                      maxWidth: 340,
+
+                      borderBottomColor: "#f2f2f2",
+                    }}
+                  />
                   <Image
                     source={icons.right_arrow}
                     style={{
@@ -835,13 +900,96 @@ const Traslados = ({ navigation, route }) => {
                     }}
                   />
                 </View>
+
                 {data.isValidConductor ? null : (
-                  <Animatable.View
-                    animation="fadeInLeft"
-                    duration={500}
-                    style={{ marginLeft: 19 }}
+                  <Animatable.View animation="fadeInLeft" duration={500}>
+                    <Text style={styles.errorMsg}>
+                      {" "}
+                      Seleccione un conductor
+                    </Text>
+                  </Animatable.View>
+                )}
+              </Animatable.View>
+
+              <Animatable.View
+                animation="fadeInUpBig"
+                style={{
+                  flex: 1,
+                  flexDirection: "column",
+                  borderRadius: 8,
+                  backgroundColor: COLORS.gray10,
+                  paddingBottom: 5,
+                  paddingLeft: 8,
+                  marginBottom: 5,
+                  marginRight: 2,
+                }}
+              >
+                <View style={{ flex: 1, flexDirection: "row" }}>
+                  <Text
+                    style={{
+                      marginTop: SIZES.base,
+                      color: COLORS.gray80,
+                      ...FONTS.h3,
+                      paddingTop: 5,
+                    }}
                   >
-                    <Text style={styles.errorMsg}>Seleccione un conductor</Text>
+                    Placa
+                  </Text>
+                  <Text
+                    style={[
+                      styles.errorMsg,
+                      { marginTop: SIZES.base, marginLeft: 5 },
+                    ]}
+                  >
+                    *
+                  </Text>
+                </View>
+
+                <View
+                  style={{
+                    flexDirection: "row",
+                    marginTop: 5,
+                    paddingBottom: 5,
+                    paddingRight: 2,
+                  }}
+                >
+                  <FontAwesome
+                    name="id-badge"
+                    size={20}
+                    style={{ paddingTop: 3, marginRight: 5 }}
+                  />
+                  <TextInput
+                    placeholder=""
+                    placeholderTextColor="#666666"
+                    style={{
+                      flex: 1,
+                      ...FONTS.h3t,
+                      fontSize: 15,
+                      color: COLORS.black,
+                      paddingRight: 12,
+                      minWidth: 250,
+                      maxWidth: 250,
+                      borderBottomWidth: 1,
+                      borderBottomColor: "#f2f2f2",
+                    }}
+                    autoCapitalize="none"
+                    onChangeText={(val) => placaChange(val)}
+                    onEndEditing={(e) => handleValidPlaca(e.nativeEvent.text)}
+                    //onChangeText={(text)=> setInput(text)}
+                    value={data.placa}
+                  />
+                  <Image
+                    source={icons.right_arrow}
+                    style={{
+                      width: 15,
+                      height: 15,
+                      tintColor: COLORS.primary3,
+                    }}
+                  />
+                </View>
+                {data.isValidPlaca ? null : (
+                  <Animatable.View animation="fadeInLeft" duration={500}>
+                    <Text style={styles.errorMsg}>Placa incorrecta</Text>
                   </Animatable.View>
                 )}
               </Animatable.View>
@@ -890,20 +1038,28 @@ const Traslados = ({ navigation, route }) => {
                     name="fort-awesome"
                     color={COLORS.base}
                     size={15}
-                    style={{ paddingTop: 5, marginRight: 5 }}
+                    style={{ paddingTop: 3, marginRight: 5 }}
                   />
-                  <View style={styles.containerSelect}>
-                    <Picker
-                      onChanged={(value) => bodegaChange(value)}
-                      options={bodegas
-                        .filter((x) => x.codigo != user.bodegaId)
-                        ?.map((bodega, index) => ({
-                          text: bodega?.nombre,
-                          value: bodega?.codigo,
-                        }))}
-                      value={data?.bodegaDestino}
-                    />
-                  </View>
+
+                  <Picker
+                    onChanged={(value) => bodegaChange(value)}
+                    options={bodegas
+                      .filter((x) => x.codigo != user.bodegaId)
+                      ?.map((bodega, index) => ({
+                        text: bodega?.nombre,
+                        value: bodega?.codigo,
+                      }))}
+                    value={data?.bodegaDestino}
+                    style={{
+                      flex: 1,
+                      borderBottomWidth: 1,
+                      borderRadius: 5,
+                      minWidth: 250,
+                      maxWidth: 340,
+                      borderBottomColor: "#f2f2f2",
+                    }}
+                  />
+
                   <Image
                     source={icons.right_arrow}
                     style={{
@@ -913,13 +1069,11 @@ const Traslados = ({ navigation, route }) => {
                     }}
                   />
                 </View>
+
                 {data.isValidBodegaDestino ? null : (
-                  <Animatable.View
-                    animation="fadeInLeft"
-                    duration={500}
-                    style={{ marginLeft: 19 }}
-                  >
+                  <Animatable.View animation="fadeInLeft" duration={500}>
                     <Text style={styles.errorMsg}>
+                      {" "}
                       Seleccione una bodega destino
                     </Text>
                   </Animatable.View>
