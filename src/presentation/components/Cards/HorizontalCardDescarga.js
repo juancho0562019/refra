@@ -91,6 +91,7 @@ const HorizontalCardDescarga = ({ item, onPress, userName }) => {
       };
       detalles.push(item);
     });
+
     getTrasladoByIdAction(item?.codInterno, userName, "LOCAL")
       .then((x) => {
         if (x.item && x.item.id > 0) {
@@ -105,7 +106,8 @@ const HorizontalCardDescarga = ({ item, onPress, userName }) => {
             item?.bodegaOrigenId,
             item?.bodegaDestinoId,
             userName,
-            "LOCAL"
+            "LOCAL",
+            item?.placa
           )
             .then((x) => {
               Alert.alert(
