@@ -7,6 +7,7 @@ exports.globalVars = {
 };
 //export const BaseURL = "http://192.168.1.14:9091/api/";
 //export const BaseURL = "http://hfvera-001-site1.etempurl.com/api/";
+//export const BaseURL = "http://refratechnik987-001-site1.ctempurl.com/api/";
 export const BaseURL = "http://refratechnik987-001-site1.ctempurl.com/api/";
 export const TaskList = "Bodega/Get?Id=1";
 
