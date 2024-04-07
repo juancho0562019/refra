@@ -3,7 +3,6 @@
     "name": "app_refra",
     "slug": "app_refra",
     "version": "1.0.0",
-    "sdkVersion": "45.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "plugins": [
@@ -22,7 +21,8 @@
       "backgroundColor": "#ffffff"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/f7503c66-ca6f-43fe-9417-da87a638f643"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -46,6 +46,9 @@
       "eas": {
         "projectId": "f7503c66-ca6f-43fe-9417-da87a638f643"
       }
+    },
+    "runtimeVersion": {
+      "policy": "sdkVersion"
     }
   }
 }
