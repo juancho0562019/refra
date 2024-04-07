@@ -79,7 +79,8 @@ const Articulos = ({ navigation, route }) => {
       if (list.length > 0) {
         primerCentro = list[0].centroCosto;
       }
-      const newList = list.concat({
+
+      const newItem = {
         codigo: item?.codigo,
         codigoInterno: item?.codigoInterno,
         centroCosto: item?.centroCosto,
@@ -94,7 +95,9 @@ const Articulos = ({ navigation, route }) => {
         nombreUnidad: item?.nombreUnidad,
         cantidad: 1,
         centroCosto: primerCentro,
-      });
+      };
+
+      const newList = [newItem, ...list];
       setList(newList);
     }
   }

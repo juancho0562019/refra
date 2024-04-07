@@ -210,7 +210,8 @@ const ArticulosSeleccionados = ({ navigation, route }) => {
                 if (list.length > 0) {
                   primerCentro = list[0].centroCosto;
                 }
-                const newList = list.concat({
+
+                const newItem = {
                   codigo: herramienta?.codigo,
                   codigoInterno: herramienta?.codigoInterno,
                   centroCosto: primerCentro,
@@ -224,7 +225,9 @@ const ArticulosSeleccionados = ({ navigation, route }) => {
                   nombreUnidad: herramienta?.nombreUnidad,
                   cantidad: 1,
                   cantidadRecibida: 0,
-                });
+                };
+
+                const newList = [newItem, ...list];
                 setList(newList);
               }
             }

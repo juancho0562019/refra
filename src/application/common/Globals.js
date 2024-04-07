@@ -12,7 +12,6 @@ export const BaseURL = "http://refratechnik-001-site1.dtempurl.com/api/";
 export const TaskList = "Bodega/Get?Id=1";
 
 export const Login = "Auth/login";
-
 export const GetArticulos = "Producto/Get";
 export const GetAllArticulos = "Producto/GetAll";
 
