@@ -117,6 +117,7 @@ const Login = ({ navigation }) => {
 
       (async () => {
         let token = await registerForPushNotificationsAsync();
+        console.log(token);
         if (token === undefined || token === "undefined" || token === null) {
           Alert.alert("Error!", "Error al registrar el dispositivo.", [
             { text: "Okay" },
@@ -133,6 +134,7 @@ const Login = ({ navigation }) => {
               signIn(x);
             })
             .catch((z) => {
+              console.log(z);
               Alert.alert(
                 "Acceso incorrecto!",
                 "El usuario o la contraseña no es correcto",
