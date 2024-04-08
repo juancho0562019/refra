@@ -604,7 +604,7 @@ const ArticulosEntrega = ({ navigation, route }) => {
                   }
                   onLimitReached={(isMax, msg) => console.log(isMax, msg)}
                   minValue={0}
-                  maxValue={999}
+                  maxValue={9999}
                   totalHeight={50}
                   inputStyle={{ backgroundColor: "white" }}
                   totalWidth={140}
